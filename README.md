@@ -8,7 +8,7 @@ A testbed for the autonomous driving controller/algorithms based on NGSIM datase
 
 # What are already in the codes
 1. NGSIM data processing part
-3. Neighbor vehicles motion state tracking part 
+3. Neighbor vehicles motion state tracking part (it can provide (x,y) informaton of the front car, left-front car, left rear car, right-front car, and right-rear car)
 4. pre-defined vehicle dynamic model (bicycle model)
 5. pre-defined low-level controllers: vehicle speed controller, vehicle following controller, lane-keeping controller, and lane-changing controller 
 6. pre-defined psuedo-lane-change decision making part
