@@ -412,7 +412,7 @@ class test_car_c:
 
 
 
-boundary=pd.read_excel('us101_road.xlsx')
+boundary=pd.read_excel('us101_road.xls')
 centerline_1=pd.read_csv('./us_101_traj/us_101_lane1',sep='\s+', names=['X','Y'])
 centerline_1a=centerline_1.to_numpy()*0.3048
 centerline_2=pd.read_csv('./us_101_traj/us_101_lane2',sep='\s+', names=['X','Y'])
@@ -660,8 +660,18 @@ fig.set_dpi(100)
 fig.set_size_inches(7,7)
 #ax=plt.axes(xlim=(1966360,1966660),ylim=(570600,570900))
 
-ax=plt.axes(xlim=(1966360,1966660),ylim=(570600,570900))
+def get_xy(car_no, i):
+    x1=car_no.X[i]-0.5*car_no.width*np.sin(np.radians(40))-car_no.length*np.cos(np.radians(40))
+    y1=car_no.Y[i]-0.5*car_no.width*np.cos(np.radians(40))+car_no.length*np.sin(np.radians(40))
+    return (x1,y1)
 
+
+x_0, y_0 = get_xy(car_interested, 0)
+
+ax=plt.axes(xlim=(1966360,1966660),ylim=(570600,570900))
+plt.xlabel('x(m)')
+plt.ylabel('y(m)')
+#ax=plt.axes(xlim=(x_0-10, x_0+10), ylim=(y_0-10, y_0+10))
 
 plt.plot(lanes[:,0],lanes[:,1],'lightsteelblue',label="lane1") #boundary 1
 plt.plot(lanes[:,2],lanes[:,3],'lightsteelblue',label="lane2")
@@ -716,10 +726,6 @@ for j in environment_vehicle_ID:
 
 
 
-def get_xy(car_no, i):
-    x1=car_no.X[i]-0.5*car_no.width*np.sin(np.radians(40))-car_no.length*np.cos(np.radians(40))
-    y1=car_no.Y[i]-0.5*car_no.width*np.cos(np.radians(40))+car_no.length*np.sin(np.radians(40))
-    return (x1,y1)
 
 
 def init():
@@ -740,6 +746,8 @@ def init():
     line5.set_xdata([0,1])
     line5.set_ydata([0,1])
     line6.set_ydata([0,1])
+
+
 
     animation_list = [line1, line2, line3, line4, line5, patch_car_interested, patch_car_test]
 
@@ -784,6 +792,10 @@ def animate(i):
     patch_car_interested.xy = get_xy(car_interested, i)
     patch_car_test.xy = get_xy(test_car, i)
 
+    ax.set_xlim(car_interested.X[i]-30, car_interested.X[i]+30)
+    ax.set_ylim(car_interested.Y[i]-30, car_interested.Y[i]+30 )
+
+
 
 
 
@@ -819,9 +831,13 @@ def animate(i):
 
 
 anim=animation.FuncAnimation(fig,animate,init_func=init,frames=np.arange(0,total_length,1),
-                            interval=TIME_INTERVAL,blit=True)
+                            interval=TIME_INTERVAL,blit=False)
 
 
+#Writer = animation.writers['ffmpeg']
+#writer = Writer(fps=15, metadata=dict(artist='Me'), bitrate=1800)
+writergif = animation.PillowWriter(fps=30)
 
+anim.save("experiment.gif", writer=writergif)
 
 plt.show()
