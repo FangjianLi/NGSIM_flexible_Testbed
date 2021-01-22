@@ -20,3 +20,5 @@ A testbed for the autonomous driving controller/algorithms based on NGSIM datase
 3. show check the results
 
 ![](experiment.gif)
+
+blue car is the original one (from NGSIM dataset) and red car is the duplicated car (with the controllers)
