@@ -15,13 +15,9 @@ A testbed for the autonomous driving controller/algorithms based on NGSIM datase
 7. animation part
 
 # How to play with this testbed
-1. choose which car you are interested in (the testbed will duplicate a car operated under your algorithms)
-2. design/modify the high-level or low-level controller whichever you want
-3. show check the results
-
-
-# How to run this repository
-1. ```python simulator.py```
+1. choose which car you are interested in (the testbed will duplicate a car operated under your algorithms) ```python data_processing.py```
+2. design/modify the high-level or low-level controller whichever you want 
+3. run the simulation ```python simulator.py```
 
 
 ![](experiment.gif)
